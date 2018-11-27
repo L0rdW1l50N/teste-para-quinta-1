@@ -4,6 +4,50 @@
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 //prototipo de fuções
+
+void alterar(){
+	setlocale(LC_ALL,"Portuguese");
+	int escolha;
+	printf("\n----------------------------------------------------------------------");
+	printf("\n|||                                                                |||");
+	printf("\n|||   Você Esta na Função de Alterar Funcionarios 2018.2          |||");
+	printf("\n|||                                                                |||");
+	printf("\n----------------------------------------------------------------------");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("\n Escolha o Tipo de Procura você quer fazer !");
+	printf("\n");
+	printf("\n Suas escolhas são: ");
+	printf("\n");
+	printf("\n Digite 1 para O Sistema Alterar as informações;");
+	printf("\n");
+	printf("\n Digite 2 para ir em função de excluir funcionário;");
+	printf("\n");
+	printf("\n Digite 3 para ir em função de procurar funcionário;");
+	printf("\n");
+	printf("\n Digite 4 para Voltar para o MENU;");
+	printf("\n");
+	printf("\n");
+	scanf("%d",&escolha);
+	if(escolha == 1){
+		printf("\n vc escolheu para Alterar");
+	}else if(escolha == 2){
+		printf("\n vc escolheu para ir para Excluir");
+		excluir();
+	}else if(escolha == 3){
+		printf("\n vc escolheu para ir para Procurar");
+		procurar();
+	}else if(escolha == 4){
+		printf("\n vc escolheu para ir para o MENU");
+		menu();
+	}else if(escolha > 4){
+		printf("\n vc escolheu errado escolha novamente");
+		alterar();
+		
+	}
+}
+
 void procurar(){
 setlocale(LC_ALL,"Portuguese");
 	int escolha;
