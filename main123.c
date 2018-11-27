@@ -16,7 +16,7 @@ void alterar(){
 	printf("\n");
 	printf("\n");
 	printf("\n");
-	printf("\n Escolha o Tipo de Procura você quer fazer !");
+	printf("\n Escolha o que você quer fazer !");
 	printf("\n");
 	printf("\n Suas escolhas são: ");
 	printf("\n");
