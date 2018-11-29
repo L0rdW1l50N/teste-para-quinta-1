@@ -14,6 +14,63 @@ struct{
 	char endereco[50];
 	char ano_contrato[5];
 }funcionario;
+void removerPorNome(){ // excluir por nome
+
+	FILE* arquivo,* arquivoTemp;
+	char confirm;
+	int escolha;
+	struct funcionario;
+	char nome[50];
+	arquivo = fopen("dados.mdb", "rb");
+	arquivoTemp = fopen("dados.temp", "ab");
+	
+	if(arquivo == NULL){
+		puts("Problemas ao abrir o arquivo!\n");
+	}
+	else{
+		system("cls");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n|||                                                                |||");
+		printf("\n|||   Você Esta na Função de Excluir Por Via de Nomes              |||");
+		printf("\n|||                                                                |||");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		printf("Informe o Nome a ser buscado: ");
+		fflush(stdin);
+		fgets(nome, 50, stdin);
+		while(fread(&funcionario, sizeof(funcionario), 1, arquivo ) == 1){
+			if(strcmp(funcionario.nome, nome) != 0){
+				fwrite(&funcionario, sizeof(funcionario), 1, arquivoTemp);	
+			}
+			else{
+				printf("CPF: %s\n", funcionario.cpf);
+				printf("Nome: %s\n", funcionario.nome);
+				printf("Telefone: %s\n", funcionario.telefone);
+				printf("Endereço: %s\n", funcionario.endereco);
+				printf("Ano de contrato: %s\n", funcionario.ano_contrato);
+				printf("-------------------------------------------\n");
+				printf("Deseja excluir este funcionario? (s/n)");
+				fflush(stdin);
+				scanf("%c", &confirm);
+					if(confirm == 'n')
+						fwrite(&funcionario, sizeof(funcionario), 1, arquivoTemp);
+					
+					else
+						printf("Dados excluidos com sucesso!\n");
+			}
+		}		
+			fclose(arquivo);		
+			fclose(arquivoTemp);
+			remove("dados.mdb");
+			rename("Dados.temp", "dados.mdb");
+			getch();
+		printf("Deseja ir para menu digite 1 se deseja sair do Programa digite qualquer numero? \n");
+		scanf("%d", &escolha);
+		if(escolha == 1) menu();else if(escolha < 1) exit(0); else if(escolha > 1) exit(0);
+	}
+}
 void incluir(){
 	system("cls");
 	char continuar;
@@ -220,7 +277,14 @@ void buscarSemelhante(){ // caçar pelo nome semelhante
 		puts("Problemas ao abrir o arquivo!\n");
 	}
 	else{
-		cabecalho();
+		printf("\n----------------------------------------------------------------------");
+		printf("\n|||                                                                |||");
+		printf("\n|||   Você Esta na Função de Procura Via Semelhante de Nomes       |||");
+		printf("\n|||                                                                |||");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n");
+		printf("\n");
+		printf("\n");
 		printf("Digite os 2 primeiros digitos para pesquisar \n");
 		fflush(stdin);
 		fgets(nome, 5, stdin);	
@@ -368,10 +432,11 @@ void excluir(){
 		printf("\n vc escolheu 1");
 	}else if(escolha == 2){
 		printf("\n vc escolheu 2");
+		removerPorNome();
 	}else if(escolha == 3){
 		printf("\n vc escolheu Voltar para MENU");
 		menu();
-	}else if(escolha == 3){
+	}else if(escolha > 3){
 		printf("\n vc escolheu errado escolha novamente!");
 		excluir();
 	}
