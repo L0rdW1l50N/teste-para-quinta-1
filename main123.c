@@ -528,7 +528,7 @@ void removerPorNome(){ // excluir por nome
 
 
 
-void alterar(){ //atualizar os dados desse vagabundo
+void alterar(){ //atualizar os dados do funcionario
 	FILE* arquivo,* arquivoTemp;
 	int opc;
 	struct funcionario;
