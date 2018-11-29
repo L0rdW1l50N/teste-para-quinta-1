@@ -410,12 +410,70 @@ void excluir(){
 		excluir();
 	}
 }
+void remover(){
+	FILE* arquivo,* arquivoTemp;
+	char confirm;
+	
+	struct funcionario;
+	char cpf[14];
+	arquivo = fopen("dados.mdb", "rb");
+	arquivoTemp = fopen("dados.temp", "ab");
+	
+	if(arquivo == NULL){
+		puts("Problemas ao abrir o arquivo!\n");
+	}
+	else{
+		system("cls");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n|||                                                                |||");
+		printf("\n|||   Você Esta na Função de Excluir Funcionarios                  |||");
+		printf("\n|||                                                                |||");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n");
+		printf("\n");
+		printf("Os Funcionarios disponiveis são:\n");
+		while(fread(&funcionario, sizeof(funcionario), 1, arquivo) == 1){
+				printf("CPF: %s \n", funcionario.cpf);
+				printf("Nome: %s \n", funcionario.nome);	
+				printf("----------------------------------------------\n");
+			}
+		printf("Informe o CPF a ser Excluido: ");
+		fflush(stdin);
+		fgets(cpf, 14, stdin);
+		while(fread(&funcionario, sizeof(funcionario), 1, arquivo ) == 1){
+			if(strcmp(funcionario.cpf, cpf) != 0){
+				fwrite(&funcionario, sizeof(funcionario), 1, arquivoTemp);	
+			}
+			else{
+				printf("CPF: %s\n", funcionario.cpf);
+				printf("Nome: %s\n", funcionario.nome);
+				printf("Telefone: %s\n", funcionario.telefone);
+				printf("Endereço: %s\n", funcionario.endereco);
+				printf("Ano de contrato: %s\n", funcionario.ano_contrato);
+				printf("-------------------------------------------\n");
+				printf("Deseja excluir este funcionario? (s/n)");
+				fflush(stdin);
+				scanf("%c", &confirm);
+					if(confirm == 'n')
+						fwrite(&funcionario, sizeof(funcionario), 1, arquivoTemp);
+					
+					else
+						printf("Dados excluidos com sucesso!\n");
+			}
+		}
+		fclose(arquivo);		
+		fclose(arquivoTemp);
+		remove("dados.mdb");
+		rename("Dados.temp", "dados.mdb");
+		getch();
+	}
+}
 
 void removerPorNome(){ // excluir por nome
 
 	FILE* arquivo,* arquivoTemp;
 	char confirm;
-	int escolha;
+	
 	struct funcionario;
 	char nome[50];
 	arquivo = fopen("dados.mdb", "rb");
@@ -463,9 +521,7 @@ void removerPorNome(){ // excluir por nome
 			remove("dados.mdb");
 			rename("Dados.temp", "dados.mdb");
 			getch();
-		printf("Deseja ir para menu digite 1 se deseja sair do Programa digite qualquer numero? \n");
-		scanf("%d", &escolha);
-		if(escolha == 1) menu();else if(escolha < 1) exit(0); else if(escolha > 1) exit(0);
+		
 	}
 }
 
