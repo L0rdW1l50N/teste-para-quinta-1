@@ -1,9 +1,127 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 //prototipo de fuções
+struct{
+	char cpf[14];
+	char nome[50];
+	char telefone[11];
+	char endereco[50];
+	char ano_contrato[5];
+}funcionario;
+void incluir(){
+	system("cls");
+	char continuar;
+	int escolha;
+	FILE* arquivo;
+	arquivo = fopen("dados.mdb", "ab");
+	struct funcionario;
+	
+	if(arquivo == NULL){
+		printf("Problemas ao abrir o arquivo!\n");
+		getch();
+	}
+	else{
+		
+		setlocale(LC_ALL,"Portuguese");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n|||                                                                |||");
+		printf("\n|||   Você Esta na Função de Incluir Funcionarios 2018.2          |||");
+		printf("\n|||                                                                |||");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		while(continuar != 'n'){
+			printf("Informe os dados\n");
+			fflush(stdin);
+			
+			printf("Informe o CPF:");
+			fgets(funcionario.cpf, 14,stdin);
+			fflush(stdin);
+	
+		
+			printf("Informe o telefone:");
+			fgets(funcionario.telefone, 11, stdin);
+			fflush(stdin);
+	
+			
+			printf("Informe o nome:");
+			fgets(funcionario.nome, 50, stdin);
+			fflush(stdin);
+			
+			printf("Informe o Endereço:");
+			fgets(funcionario.endereco, 50, stdin);
+			fflush(stdin);
+			
+			
+			printf("Informe o ano de contratação:");
+			fgets(funcionario.ano_contrato, 5, stdin);
+			fflush(stdin);
+			
+			
+			fwrite(&funcionario, sizeof(funcionario) , 1, arquivo);
+			
+			printf("Deseja inserir outro registro? (s/n)\n");
+			scanf("%c", &continuar);
+			
+		};
+		fclose(arquivo);
+		printf("Deseja ir para menu digite 1 se deseja sair do Programa digite qualquer numero? \n");
+		scanf("%d", &escolha);
+		if(escolha == 1) menu();else if(escolha < 1) exit(0); else if(escolha > 1) exit(0);
+	}
+}
+}
+
+
+void buscar_cpf(){ //buscar via cpf
+	
+	system("cls");
+	
+	FILE* arquivo;
+	
+	struct funcionario;
+	char cpf[14];
+	
+	arquivo = fopen("dados.mdb", "rb");
+	if(arquivo == NULL){
+		puts("Problemas ao abrir o arquivo!\n");
+	}
+	else{
+		printf("\n----------------------------------------------------------------------");
+		printf("\n|||                                                                |||");
+		printf("\n|||   Você Esta na Função de Procura Via CPF                       |||");
+		printf("\n|||                                                                |||");
+		printf("\n----------------------------------------------------------------------");
+		printf("\n");
+		printf("\n");
+		printf("\n");
+		fflush(stdin);
+		printf("Digite o CPF a ser pesquisado\n");
+		fflush(stdin);
+		fgets(cpf, 14, stdin);			
+		while(fread(&funcionario, sizeof(funcionario), 1, arquivo) == 1){
+			if(strcmp(funcionario.cpf, cpf) == 0){
+				printf("CPF: %s\n", funcionario.cpf);
+				printf("Nome: %s\n", funcionario.nome);
+				printf("Telefone: %s\n", funcionario.telefone);
+				printf("Endereço: %s\n", funcionario.endereco);
+				printf("Ano de contratação: %s\n", funcionario.ano_contrato);	
+				printf("----------------------------------------------\n");	
+				
+			}
+		}
+	}
+	getch();
+	fclose(arquivo);
+}
+
 
 void alterar(){
 	setlocale(LC_ALL,"Portuguese");
@@ -150,15 +268,19 @@ void menu(){
 	scanf("%d",&escolha);
 	if(escolha == 1){
 		printf("\n vc escolheu Incluir");
+		incluir();
 	}else if(escolha == 2){
 		printf("\n vc escolheu Alterar");
+		alterar();
 	}else if(escolha == 3){
 		printf("\n vc escolheu Excluir");
 		excluir();
 	}else if(escolha == 4){
 		printf("\n vc escolheu Procurar");
+		procurar();
 	}else if(escolha == 5){
 		printf("\n vc escolheu Sair do Programa");
+		exit(0);
 	}else if(escolha > 5){
 		printf("\n Esta escolha não tem escolha novamente!");
 		menu();
