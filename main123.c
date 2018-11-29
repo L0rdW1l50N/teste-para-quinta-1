@@ -399,6 +399,7 @@ void excluir(){
 	scanf("%d",&escolha);
 	if(escolha == 1){
 		printf("\n vc escolheu 1");
+		remover();
 	}else if(escolha == 2){
 		printf("\n vc escolheu 2");
 		removerPorNome();
